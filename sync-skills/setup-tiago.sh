@@ -65,12 +65,12 @@ fi
 echo ""
 
 echo "┌──────────────────────────────────────────────────────┐"
-echo "│  Skills que existem nos DOIS lugares (conflito):     │"
+echo "│  Skills que existem nos dois lugares (repo prevalece):│"
 echo "└──────────────────────────────────────────────────────┘"
 if [ ${#IN_BOTH[@]} -eq 0 ]; then
   echo "  (nenhuma)"
 else
-  for s in "${IN_BOTH[@]}"; do echo "  ~ $s"; done
+  for s in "${IN_BOTH[@]}"; do echo "  ~ $s  (será substituída pela versão do repo)"; done
 fi
 echo ""
 
@@ -84,37 +84,7 @@ else
 fi
 echo ""
 
-# ── 4. Pergunta sobre skills em conflito ──────────────────────────────────────
-KEEP_LOCAL=()
-OVERWRITE=()
-
-if [ ${#IN_BOTH[@]} -gt 0 ]; then
-  echo "╔══════════════════════════════════════════════════════╗"
-  echo "║  Para cada skill em conflito, escolha:               ║"
-  echo "║  [A] = usar a versão do repo APTUS (substituir)      ║"
-  echo "║  [L] = manter a sua versão local                     ║"
-  echo "╚══════════════════════════════════════════════════════╝"
-  echo ""
-
-  for skill in "${IN_BOTH[@]}"; do
-    while true; do
-      read -r -p "  $skill  [A/L]: " choice
-      choice=$(echo "$choice" | tr '[:lower:]' '[:upper:]')
-      if [[ "$choice" == "A" ]]; then
-        OVERWRITE+=("$skill")
-        break
-      elif [[ "$choice" == "L" ]]; then
-        KEEP_LOCAL+=("$skill")
-        break
-      else
-        echo "  Digite A ou L."
-      fi
-    done
-  done
-  echo ""
-fi
-
-# ── 5. Pergunta sobre skills somente locais ───────────────────────────────────
+# ── 4. Pergunta sobre skills somente locais ───────────────────────────────────
 PERSONAL_KEEP=()
 
 if [ ${#ONLY_LOCAL[@]} -gt 0 ]; then
@@ -156,8 +126,8 @@ for skill in "${ONLY_APTUS[@]}"; do
   echo "  + instalado: $skill"
 done
 
-# Substitui skills em conflito que o usuário escolheu sobrescrever
-for skill in "${OVERWRITE[@]}"; do
+# Substitui todas as skills em conflito pela versão do repo
+for skill in "${IN_BOTH[@]}"; do
   rm -rf "$SKILLS_DIR/$skill"
   cp -r "$TEMP_DIR/$skill" "$SKILLS_DIR/$skill"
   echo "  ~ atualizado: $skill"
