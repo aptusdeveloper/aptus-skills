@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "ui-skills",
+  "owner": "phrazzld",
+  "repo": "claude-config",
+  "path": ".claude/skills/ui-skills",
+  "branch": "master",
+  "sha": "fa29545b25f17fd8ce970d3bb299860ef97e0b60",
+  "source": "manual"
+}
