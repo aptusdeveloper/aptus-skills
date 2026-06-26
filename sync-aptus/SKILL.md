@@ -21,7 +21,7 @@ Rode o seguinte comando via Bash:
 ```
 
 O script já cuida de tudo automaticamente:
-- Verifica mudanças em cada projeto (aptus-hub, aws-backend, bp-integrations, idealizacoes, prompts)
+- Verifica mudanças em cada projeto (aptus-hub, aptus-chat, aws-backend, bp-integrations, bot-tests, idealizacoes, prompts)
 - Faz `git pull --ff-only` antes de commitar — **obrigatório** porque Eder e Tiago trabalham direto na `main` dos três repositórios principais
 - Se o pull falhar (históricos divergiram), avisa e pula o repo — não tenta resolver conflitos automaticamente
 - Gera mensagens de commit semânticas via Claude CLI analisando o diff
